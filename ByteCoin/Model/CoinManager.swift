@@ -37,7 +37,7 @@ struct CoinManager {
                 }
                 
                 if let safeData = data {
-                    if let coin = self.parseJSON(coinData: safeData) {
+                    if let coin = self.parseJSON(safeData) {
                         delegate?.didUpdateCoin(self, coin)
                         
                     }
@@ -49,7 +49,7 @@ struct CoinManager {
         }
     }
     
-    func parseJSON (coinData: Data) -> CoinModel? {
+    func parseJSON (_ coinData: Data) -> CoinModel? {
         let decoder = JSONDecoder()
         do {
             let decodedData = try decoder.decode(CoinData.self, from: coinData)

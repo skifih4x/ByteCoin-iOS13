@@ -8,25 +8,10 @@
 
 import UIKit
 
-class ViewController: UIViewController, UIPickerViewDataSource, UIPickerViewDelegate {
+class ViewController: UIViewController {
     
     var coinManager = CoinManager()
     
-    func numberOfComponents(in pickerView: UIPickerView) -> Int {
-        1
-    }
-    
-    func pickerView(_ pickerView: UIPickerView, numberOfRowsInComponent component: Int) -> Int {
-        coinManager.currencyArray.count
-    }
-    func pickerView(_ pickerView: UIPickerView, titleForRow row: Int, forComponent component: Int) -> String? {
-        coinManager.currencyArray[row]
-    }
-    func pickerView(_ pickerView: UIPickerView, didSelectRow row: Int, inComponent component: Int) {
-        let arrayCoin = coinManager.currencyArray[row]
-        coinManager.getCoinPrice(for: arrayCoin)
-
-    }
     
     @IBOutlet var bitcoinLabel: UILabel!
     @IBOutlet var currencyLabel: UILabel!
@@ -42,7 +27,28 @@ class ViewController: UIViewController, UIPickerViewDataSource, UIPickerViewDele
     }
 
 }
+
+//MARK: - pickerView
+
+extension ViewController: UIPickerViewDataSource, UIPickerViewDelegate {
+func numberOfComponents(in pickerView: UIPickerView) -> Int {
+    1
+}
+
+func pickerView(_ pickerView: UIPickerView, numberOfRowsInComponent component: Int) -> Int {
+    coinManager.currencyArray.count
+}
+func pickerView(_ pickerView: UIPickerView, titleForRow row: Int, forComponent component: Int) -> String? {
+    coinManager.currencyArray[row]
+}
+func pickerView(_ pickerView: UIPickerView, didSelectRow row: Int, inComponent component: Int) {
+    let arrayCoin = coinManager.currencyArray[row]
+    coinManager.getCoinPrice(for: arrayCoin)
+    
+}
+}
 //MARK: - didUpdateCoin
+
 extension ViewController: CoinManagerDelegate {
     
     func didUpdateCoin(_ coinManager: CoinManager, _ coin: CoinModel) {
